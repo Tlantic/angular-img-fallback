@@ -28,21 +28,24 @@ angular.module('dcbImgFallback', [])
         // Load the image source in the background and replace the element source once it's ready
         var linkFunction = function (scope, element, attr) {
             element[0].src = attr.loadingSrc || loadingDefault;
-            var img = new Image();
-            img.src = attr.imgSrc;
-            img.onload = function () {
-                img.onload = null;
-                if (element[0].src !== img.src) {
-                    element[0].src = img.src;
-                }
-            };
+            
+            attr.$observe('imageSrc', function(value) {
+                var img = new Image();
+                img.src = value;
+                img.onload = function () {
+                    img.onload = null;
+                    if (element[0].src !== img.src) {
+                        element[0].src = img.src;
+                    }
+                };
+            });
+            
         };
 
         return {
             restrict: 'A',
             compile: function (el, attr) {
-                // Take over the ng-src attribute to stop it from loading the image
-                attr.imgSrc = attr.ngSrc;
+                // Delete ng-src to don't waste time on doing other stuff
                 delete attr.ngSrc;
 
                 return linkFunction;
