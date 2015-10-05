@@ -3,6 +3,7 @@
  * (c) 2014 Daniel Cohen. http://dcb.co.il
  * License: MIT
  * https://github.com/dcohenb/angular-img-fallback
+ * https://github.com/Tlantic/angular-img-fallback
  */
 angular.module('dcbImgFallback', [])
     .directive('fallbackSrc', function () {
